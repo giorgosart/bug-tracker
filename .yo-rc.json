@@ -37,6 +37,6 @@
       "en",
       "el"
     ],
-    "herokuAppName": "bug-tracker"
+    "herokuAppName": "bug-tracking"
   }
 }
