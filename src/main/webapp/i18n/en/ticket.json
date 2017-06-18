@@ -17,6 +17,7 @@
             },
             "title": "Title",
             "description": "Description",
+            "type": "Type",
             "dueDate": "Due Date",
             "done": "Done",
             "project": "Project",

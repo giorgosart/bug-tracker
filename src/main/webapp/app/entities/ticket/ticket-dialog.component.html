@@ -29,6 +29,17 @@
                 [(ngModel)]="ticket.description"  />
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="bugTrackerApp.ticket.type" for="field_type">Type</label>
+            <input type="text" class="form-control" name="type" id="field_type"
+                [(ngModel)]="ticket.type" required />
+            <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="bugTrackerApp.ticket.dueDate" for="field_dueDate">Due Date</label>
             <div class="input-group">
                 <input id="field_dueDate" type="text" class="form-control" name="dueDate" ngbDatepicker  #dueDateDp="ngbDatepicker" [(ngModel)]="ticket.dueDate"

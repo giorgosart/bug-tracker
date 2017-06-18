@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +44,7 @@ public class ProjectResource {
      */
     @PostMapping("/projects")
     @Timed
-    public ResponseEntity<Project> createProject(@RequestBody Project project) throws URISyntaxException {
+    public ResponseEntity<Project> createProject(@Valid @RequestBody Project project) throws URISyntaxException {
         log.debug("REST request to save Project : {}", project);
         if (project.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new project cannot already have an ID")).body(null);
@@ -65,7 +66,7 @@ public class ProjectResource {
      */
     @PutMapping("/projects")
     @Timed
-    public ResponseEntity<Project> updateProject(@RequestBody Project project) throws URISyntaxException {
+    public ResponseEntity<Project> updateProject(@Valid @RequestBody Project project) throws URISyntaxException {
         log.debug("REST request to update Project : {}", project);
         if (project.getId() == null) {
             return createProject(project);

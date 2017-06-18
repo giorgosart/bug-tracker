@@ -4,6 +4,15 @@
     "fields": [
         {
             "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": 1
+        },
+        {
+            "fieldName": "code",
             "fieldType": "String"
         }
     ],

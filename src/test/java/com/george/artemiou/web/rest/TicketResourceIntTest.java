@@ -45,6 +45,9 @@ public class TicketResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE = "BBBBBBBBBB";
+
     private static final LocalDate DEFAULT_DUE_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DUE_DATE = LocalDate.now(ZoneId.systemDefault());
 
@@ -90,6 +93,7 @@ public class TicketResourceIntTest {
         Ticket ticket = new Ticket()
             .title(DEFAULT_TITLE)
             .description(DEFAULT_DESCRIPTION)
+            .type(DEFAULT_TYPE)
             .dueDate(DEFAULT_DUE_DATE)
             .done(DEFAULT_DONE);
         return ticket;
@@ -117,6 +121,7 @@ public class TicketResourceIntTest {
         Ticket testTicket = ticketList.get(ticketList.size() - 1);
         assertThat(testTicket.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testTicket.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testTicket.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testTicket.getDueDate()).isEqualTo(DEFAULT_DUE_DATE);
         assertThat(testTicket.isDone()).isEqualTo(DEFAULT_DONE);
     }
@@ -160,6 +165,24 @@ public class TicketResourceIntTest {
 
     @Test
     @Transactional
+    public void checkTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = ticketRepository.findAll().size();
+        // set the field null
+        ticket.setType(null);
+
+        // Create the Ticket, which fails.
+
+        restTicketMockMvc.perform(post("/api/tickets")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(ticket)))
+            .andExpect(status().isBadRequest());
+
+        List<Ticket> ticketList = ticketRepository.findAll();
+        assertThat(ticketList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllTickets() throws Exception {
         // Initialize the database
         ticketRepository.saveAndFlush(ticket);
@@ -171,6 +194,7 @@ public class TicketResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(ticket.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].dueDate").value(hasItem(DEFAULT_DUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].done").value(hasItem(DEFAULT_DONE.booleanValue())));
     }
@@ -188,6 +212,7 @@ public class TicketResourceIntTest {
             .andExpect(jsonPath("$.id").value(ticket.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.dueDate").value(DEFAULT_DUE_DATE.toString()))
             .andExpect(jsonPath("$.done").value(DEFAULT_DONE.booleanValue()));
     }
@@ -212,6 +237,7 @@ public class TicketResourceIntTest {
         updatedTicket
             .title(UPDATED_TITLE)
             .description(UPDATED_DESCRIPTION)
+            .type(UPDATED_TYPE)
             .dueDate(UPDATED_DUE_DATE)
             .done(UPDATED_DONE);
 
@@ -226,6 +252,7 @@ public class TicketResourceIntTest {
         Ticket testTicket = ticketList.get(ticketList.size() - 1);
         assertThat(testTicket.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testTicket.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testTicket.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testTicket.getDueDate()).isEqualTo(UPDATED_DUE_DATE);
         assertThat(testTicket.isDone()).isEqualTo(UPDATED_DONE);
     }

@@ -80,7 +80,7 @@ class TicketGatlingTest extends Simulation {
             .exec(http("Create new ticket")
             .post("/api/tickets")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "title":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "dueDate":"2020-01-01T00:00:00.000Z", "done":null}""")).asJSON
+            .body(StringBody("""{"id":null, "title":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "type":"SAMPLE_TEXT", "dueDate":"2020-01-01T00:00:00.000Z", "done":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_ticket_url"))).exitHereIfFailed
             .pause(10)

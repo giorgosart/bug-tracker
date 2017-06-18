@@ -32,6 +32,10 @@ public class Ticket implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @NotNull
+    @Column(name = "jhi_type", nullable = false)
+    private String type;
+
     @Column(name = "due_date")
     private LocalDate dueDate;
 
@@ -83,6 +87,19 @@ public class Ticket implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Ticket type(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public LocalDate getDueDate() {
@@ -188,6 +205,7 @@ public class Ticket implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
+            ", type='" + getType() + "'" +
             ", dueDate='" + getDueDate() + "'" +
             ", done='" + isDone() + "'" +
             "}";

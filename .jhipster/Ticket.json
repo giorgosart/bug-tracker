@@ -35,6 +35,13 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "type",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "dueDate",
             "fieldType": "LocalDate"
         },

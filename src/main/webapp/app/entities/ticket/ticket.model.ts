@@ -6,6 +6,7 @@ export class Ticket {
         public id?: number,
         public title?: string,
         public description?: string,
+        public type?: string,
         public dueDate?: any,
         public done?: boolean,
         public project?: Project,

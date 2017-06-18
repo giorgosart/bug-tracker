@@ -19,6 +19,7 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="title"><span jhiTranslate="bugTrackerApp.ticket.title">Title</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span jhiTranslate="bugTrackerApp.ticket.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type"><span jhiTranslate="bugTrackerApp.ticket.type">Type</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="dueDate"><span jhiTranslate="bugTrackerApp.ticket.dueDate">Due Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="done"><span jhiTranslate="bugTrackerApp.ticket.done">Done</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="project.name"><span jhiTranslate="bugTrackerApp.ticket.project">Project</span> <span class="fa fa-sort"></span></th>
@@ -31,6 +32,7 @@
                 <td><a [routerLink]="['../ticket', ticket.id ]">{{ticket.id}}</a></td>
                 <td>{{ticket.title}}</td>
                 <td>{{ticket.description}}</td>
+                <td>{{ticket.type}}</td>
                 <td>{{ticket.dueDate | date:'mediumDate'}}</td>
                 <td>{{ticket.done}}</td>
                 <td>
